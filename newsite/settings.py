@@ -78,7 +78,16 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'newsite.wsgi.application'
+ASGI_APPLICATION = 'newsite.asgi.application'
 
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels_redis.core.RedisChannelLayer",
+        "CONFIG": {
+            "hosts": [("127.0.0.1", 6379)],
+        },
+    },
+}
 
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
@@ -139,3 +148,6 @@ EMAIL_HOST_USER = 'a.grishaev98@gmail.com'
 EMAIL_HOST_PASSWORD = 'Defender231298@!'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
+
+CELERY_BROKER_URL = 'http://localhost:6379/'
+CELERY_RESULT_BACKEND = 'http://localhost:6379/'
