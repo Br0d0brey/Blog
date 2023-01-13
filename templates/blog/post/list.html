@@ -4,18 +4,18 @@
 {% block title %}My Blog{% endblock %}  
   
 {% block content %}  
-  <h1>My Blog</h1>
+  <h1 class="text-white lg:text-4xl hover:text-gray-200"><a href="{% url "blog:post_list" %}">My blog</h1>
 
   {% if tag %}
-    <h2>Posts tagged with "{{ tag.name }}"</h2>
+    <h2 >Posts tagged with "{{ tag.name }}"</h2>
   {% endif %}
 
   {% for post in posts %}
     <h2>
-      <a href="{{ post.get_absolute_url }}">
+      <a class="text-white lg:text-3xl hover:text-gray-200" href="{{ post.get_absolute_url }}">
        {{ post.title }}
       </a>
-      <p class="tags">
+      <p class="tags text-white lg:text-2xl hover:text-gray-400" >
   Tags:
   {% for tag in post.tags.all %}
     <a href="{% url "blog:post_list_by_tag" tag.slug %}">
@@ -24,11 +24,12 @@
     {% if not forloop.last %}, {% endif %}
   {% endfor %}
 </p>
-    </h2>
-    <p class="date">
+    </h2 >
+    <p class ="date text-grey">
       Published {{ post.publish }} by {{ post.author }}
     </p>
-    {{ post.body|markdown|truncatewords:30 }}
+<div class ="text-black">{{ post.body|markdown|truncatewords:30 }}</div>
+
   {% endfor %}
   {% include "../pagination.html" with page=posts %}
 {% endblock %}
