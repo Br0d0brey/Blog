@@ -41,6 +41,9 @@ INSTALLED_APPS = [
     'django.contrib.sitemaps',
     'django.contrib.postgres',
     'taggit',
+    'channels',
+    'sign',
+    'room',
     'blog',
 ]
 

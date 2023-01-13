@@ -1,0 +1,57 @@
+{% extends "blog/base.html" %}
+{% load blog_tags %}
+  
+{% block title %}{{ post.title }}{% endblock %}  
+  
+{% block content %}  
+  <h1 class=" text-white text-center lg:text-2xl bg-teal-600">{{ post.title }}</h1>
+  <p class="date text-black text-center">
+    Published {{ post.publish }} by {{ post.author }}  
+  </p>  
+  <div class ="text-black text-center">{{ post.body|markdown }}</div>
+<p>
+  <a class="text-white text-center bg-teal-700 lg:text-2xl hover:bg-teal-700" href="{% url 'blog:post_share' post.id %}">
+    Share this post
+  </a>
+</p>
+
+<h2 class=" text-grey lg:text-2xl bg-teal-600">Similar posts:</h2>
+{% for post in similar_posts %}
+    <p>
+        <a class="text-white lg:text-xl hover:text-gray-200" href="{{ post.get_absolute_url }}">{{ post.title }}</a>
+    </p>
+ {% empty %}
+  <p class=" text-grey lg:text-2xl bg-teal-600">There are no similar posts yet.</p>
+{% endfor %}
+
+
+
+{% for comment in comments %}
+  <div class="comment bg-teal-600">
+    <p class="info text-black lg:text-2xl text-center">
+      Comment {{ forloop.counter }} by {{ comment.name }}
+      {{ comment.created }}
+    </p>
+  {{ comment.body|linebreaks }}
+  </div>
+{% empty %}
+  <p>There are no comments yet.</p>
+{% endfor %}
+
+{% with comments.count as total_comments %}
+  <h2>
+    {{ total_comments }} comment{{ total_comments|pluralize }}
+  </h2>
+
+{% if new_comment %}
+  <h2 class ="text-black text-center">Your comment has been added.</h2>
+{% else %}
+  <h2 class ="text-black lg:text-2xl text-center">Add a new comment:</h2>
+  <form class ="text-black lg:text-2xl text-center" action="." method="post">
+    <div>{{ comment_form.as_p }}</div>
+    {% csrf_token %}
+    <p><input class="px-5 py-3 rounded-xl text-white text-center bg-teal-700 lg:text-2xl hover:bg-teal-700" type="submit" value="Add comment"></p>
+  </form>
+{% endif %}
+{% endwith %}
+{% endblock %}

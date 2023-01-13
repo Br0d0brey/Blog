@@ -30,9 +30,7 @@ class Post(models.Model):
     objects = models.Manager()
     published = PublishedManager()
     tags = TaggableManager()
-    status = models.CharField(max_length=10,
-                              choices=STATUS_CHOICES,
-                              default='draft')
+    status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='draft')
 
     class Meta:
         ordering = ('-publish',)
